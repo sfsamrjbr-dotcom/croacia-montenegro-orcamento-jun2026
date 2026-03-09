@@ -118,7 +118,7 @@
             border: 1px solid rgba(212,175,55,0.15);
             border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         .hotel-img {
             width: 100%;
@@ -174,44 +174,105 @@
             line-height: 1.6;
         }
 
-        /* Price Table */
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
+        /* Room Cards */
+        .rooms-grid {
+            display: grid;
+            gap: 1rem;
             margin-top: 1.5rem;
         }
-        .price-table th,
-        .price-table td {
-            padding: 14px 16px;
-            text-align: left;
-            border-bottom: 1px solid rgba(245,240,235,0.08);
+        .room-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(245,240,235,0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
         }
-        .price-table th {
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: rgba(245,240,235,0.4);
-            font-weight: 500;
+        .room-card:hover {
+            border-color: rgba(212,175,55,0.3);
         }
-        .price-table td {
-            font-size: 0.9rem;
-            color: #f5f0eb;
+        .room-card-inner {
+            display: flex;
+            flex-direction: row;
         }
-        .price-table .category-label {
+        .room-img {
+            width: 180px;
+            min-height: 140px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .room-info {
+            padding: 1rem 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .room-category {
             font-size: 0.65rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             padding: 3px 10px;
             border-radius: 12px;
             display: inline-block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            width: fit-content;
         }
         .cat-economico { background: rgba(76,175,80,0.15); color: #81c784; border: 1px solid rgba(76,175,80,0.3); }
         .cat-intermediario { background: rgba(33,150,243,0.15); color: #64b5f6; border: 1px solid rgba(33,150,243,0.3); }
         .cat-top { background: rgba(212,175,55,0.15); color: #d4af37; border: 1px solid rgba(212,175,55,0.3); }
-        .price-highlight {
-            font-weight: 600;
+
+        .room-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            color: #f5f0eb;
+            margin-bottom: 4px;
+        }
+        .room-details {
+            font-size: 0.8rem;
+            color: rgba(245,240,235,0.5);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .room-prices {
+            display: flex;
+            gap: 1.5rem;
+            align-items: baseline;
+        }
+        .room-price-daily {
+            font-size: 0.8rem;
+            color: rgba(245,240,235,0.5);
+        }
+        .room-price-total {
+            font-size: 1.1rem;
+            font-weight: 700;
             color: #d4af37;
+        }
+
+        /* Button */
+        .btn-rooms {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.5rem;
+            padding: 10px 20px;
+            background: rgba(212,175,55,0.12);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 30px;
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        .btn-rooms:hover {
+            background: rgba(212,175,55,0.25);
+            border-color: rgba(212,175,55,0.5);
+            transform: translateY(-1px);
+        }
+        .btn-rooms svg {
+            width: 16px;
+            height: 16px;
         }
 
         /* Investment Summary */
@@ -243,11 +304,6 @@
             font-size: 1.1rem;
             border-top: 2px solid rgba(212,175,55,0.3);
             border-bottom: none;
-        }
-        .investment-table tr.section-row td {
-            font-weight: 600;
-            color: #f5f0eb;
-            background: rgba(212,175,55,0.05);
         }
 
         /* Itinerary Overview */
@@ -317,15 +373,6 @@
         .footer-text {
             font-size: 0.85rem;
             color: rgba(245,240,235,0.5);
-            line-height: 1.6;
-        }
-
-        /* Divider */
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(212,175,55,0.3), transparent);
-            margin: 1rem 0;
         }
 
         /* FAB Navigation */
@@ -430,8 +477,9 @@
 
         @media (max-width: 600px) {
             .hotel-info-grid { grid-template-columns: 1fr 1fr; }
-            .price-table { font-size: 0.8rem; }
-            .price-table th, .price-table td { padding: 10px 8px; }
+            .room-card-inner { flex-direction: column; }
+            .room-img { width: 100%; height: 180px; }
+            .room-prices { flex-direction: column; gap: 2px; }
         }
         @media (min-width: 768px) {
             .nav-panel-grid { grid-template-columns: repeat(5, 1fr); }
@@ -461,28 +509,28 @@
     <div class="gold-line"></div>
 
     <div class="itinerary-card">
-        <div class="itinerary-dates">21/06 a 25/06 — 4 noites</div>
+        <div class="itinerary-dates">21/06 a 25/06 &mdash; 4 noites</div>
         <div class="itinerary-destination">Hvar, Croacia</div>
         <div class="itinerary-hotel">Adriana Hvar Spa Hotel</div>
         <div class="itinerary-transport">Chegada em Split + Jet Boat para Hvar</div>
     </div>
 
     <div class="itinerary-card">
-        <div class="itinerary-dates">25/06 a 27/06 — 2 noites</div>
+        <div class="itinerary-dates">25/06 a 27/06 &mdash; 2 noites</div>
         <div class="itinerary-destination">Herceg Novi, Montenegro</div>
-        <div class="itinerary-hotel">One&Only Portonovi</div>
+        <div class="itinerary-hotel">One&amp;Only Portonovi</div>
         <div class="itinerary-transport">Transfer terrestre Hvar &rarr; Herceg Novi</div>
     </div>
 
     <div class="itinerary-card">
-        <div class="itinerary-dates">27/06 a 29/06 — 2 noites</div>
+        <div class="itinerary-dates">27/06 a 29/06 &mdash; 2 noites</div>
         <div class="itinerary-destination">Tivat, Montenegro</div>
         <div class="itinerary-hotel">Regent Porto Montenegro</div>
         <div class="itinerary-transport">Transfer terrestre Herceg Novi &rarr; Tivat</div>
     </div>
 
     <div class="itinerary-card">
-        <div class="itinerary-dates">29/06 a 01/07 — 2 noites</div>
+        <div class="itinerary-dates">29/06 a 01/07 &mdash; 2 noites</div>
         <div class="itinerary-destination">Dubrovnik, Croacia</div>
         <div class="itinerary-hotel">Hotel Bellevue Dubrovnik</div>
         <div class="itinerary-transport">Transfer terrestre Tivat &rarr; Dubrovnik</div>
@@ -502,12 +550,12 @@
     <div class="gold-line"></div>
 
     <!-- HOTEL 1: ADRIANA HVAR -->
-    <div class="hotel-card">
+    <div class="hotel-card" id="adriana">
         <img src="images/adriana-hvar.jpg" alt="Adriana Hvar Spa Hotel" class="hotel-img">
         <div class="hotel-body">
             <div class="hotel-name">Adriana Hvar Spa Hotel</div>
             <div class="hotel-location">Obala Fabrika 28, 21450 Hvar, Croacia</div>
-            <div class="hotel-rating">9.4 Wonderful — Booking.com</div>
+            <div class="hotel-rating">9.4 Wonderful &mdash; Booking.com</div>
             <div class="hotel-info-grid">
                 <div>
                     <div class="hotel-info-label">Check-in</div>
@@ -530,46 +578,66 @@
                 Cafe da manha incluso &middot; Spa diario incluso &middot; Cancelamento gratis ate 14/06 &middot; Rooftop bar com vista para o porto &middot; Praia privativa
             </div>
 
-            <table class="price-table">
-                <thead>
-                    <tr>
-                        <th>Categoria</th>
-                        <th>Tipo</th>
-                        <th>Diaria</th>
-                        <th>Total (4 noites)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="category-label cat-economico">Economico</span><br>Spa Suite</td>
-                        <td>452ft&sup2; &middot; City View</td>
-                        <td>R$ 4.856</td>
-                        <td class="price-highlight">R$ 19.426</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-intermediario">Intermediario</span><br>Spa Suite Sea View</td>
-                        <td>452ft&sup2; &middot; Vista Mar</td>
-                        <td>R$ 5.313</td>
-                        <td class="price-highlight">R$ 21.252</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-top">Top</span><br>Penthouse Suite</td>
-                        <td>Varanda &middot; Vista Mar Panoramica</td>
-                        <td>R$ 6.292</td>
-                        <td class="price-highlight">R$ 25.169</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Room Cards -->
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/adriana-spa-suite.jpg" alt="Spa Suite" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-economico">Economico</span>
+                            <div class="room-name">Spa Suite</div>
+                            <div class="room-details">452ft&sup2; &middot; Vista Cidade &middot; Acesso Spa &middot; Cama King</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 4.856/noite</span>
+                                <span class="room-price-total">R$ 19.426</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/adriana-suite-seaview.jpg" alt="Spa Suite Sea View" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-intermediario">Intermediario</span>
+                            <div class="room-name">Spa Suite Sea View</div>
+                            <div class="room-details">452ft&sup2; &middot; Vista Mar &middot; Acesso Spa &middot; Cama King</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 5.313/noite</span>
+                                <span class="room-price-total">R$ 21.252</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/adriana-penthouse.jpg" alt="Penthouse Suite" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-top">Top</span>
+                            <div class="room-name">Penthouse Suite</div>
+                            <div class="room-details">Varanda Privativa &middot; Vista Mar Panoramica &middot; Acesso Spa &middot; Andar mais alto</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 6.292/noite</span>
+                                <span class="room-price-total">R$ 25.169</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://www.booking.com/hotel/hr/adriana-hvar-spa.html" target="_blank" class="btn-rooms">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                Ver Quartos no Booking.com
+            </a>
         </div>
     </div>
 
     <!-- HOTEL 2: ONE&ONLY PORTONOVI -->
-    <div class="hotel-card">
-        <img src="images/oneonly-portonovi.jpg" alt="One&Only Portonovi" class="hotel-img">
+    <div class="hotel-card" id="oneonly">
+        <img src="images/oneonly-portonovi.jpg" alt="One&amp;Only Portonovi" class="hotel-img">
         <div class="hotel-body">
-            <div class="hotel-name">One&Only Portonovi</div>
+            <div class="hotel-name">One&amp;Only Portonovi</div>
             <div class="hotel-location">Portonovi Resort, 85340 Herceg-Novi, Montenegro</div>
-            <div class="hotel-rating">9.6 Exceptional — Booking.com</div>
+            <div class="hotel-rating">9.6 Exceptional &mdash; Booking.com</div>
             <div class="hotel-info-grid">
                 <div>
                     <div class="hotel-info-label">Check-in</div>
@@ -592,46 +660,66 @@
                 Cafe da manha incluso &middot; Praia privativa &middot; Spa Chenot &middot; 3 restaurantes &middot; Piscina infinity &middot; Boka Bay UNESCO &middot; Cancelamento gratis ate 26/05
             </div>
 
-            <table class="price-table">
-                <thead>
-                    <tr>
-                        <th>Categoria</th>
-                        <th>Tipo</th>
-                        <th>Diaria</th>
-                        <th>Total (2 noites)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="category-label cat-economico">Economico</span><br>Portonovi Room</td>
-                        <td>592ft&sup2; &middot; Mountain View</td>
-                        <td>R$ 10.424</td>
-                        <td class="price-highlight">R$ 20.847</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-intermediario">Intermediario</span><br>Bay Room</td>
-                        <td>592ft&sup2; &middot; Sea View</td>
-                        <td>R$ 12.232</td>
-                        <td class="price-highlight">R$ 24.464</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-top">Top</span><br>One&Only Suite</td>
-                        <td>1324ft&sup2; &middot; Terraco &middot; 2 Lareiras</td>
-                        <td>R$ 27.468</td>
-                        <td class="price-highlight">R$ 54.936</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Room Cards -->
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/oneonly-suite-one.jpg" alt="Portonovi Room" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-economico">Economico</span>
+                            <div class="room-name">Portonovi Room</div>
+                            <div class="room-details">592ft&sup2; &middot; Vista Montanha &middot; Varanda &middot; Cama King</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 10.424/noite</span>
+                                <span class="room-price-total">R$ 20.847</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/oneonly-grand-suite.jpg" alt="Bay Room" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-intermediario">Intermediario</span>
+                            <div class="room-name">Bay Room</div>
+                            <div class="room-details">592ft&sup2; &middot; Vista Mar (Boka Bay) &middot; Varanda &middot; Cama King</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 12.232/noite</span>
+                                <span class="room-price-total">R$ 24.464</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/oneonly-villa.jpg" alt="One&amp;Only Suite" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-top">Top</span>
+                            <div class="room-name">One&amp;Only Suite</div>
+                            <div class="room-details">1324ft&sup2; &middot; Terraco Privativo &middot; 2 Lareiras &middot; Sala de Estar &middot; Vista Boka Bay</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 27.468/noite</span>
+                                <span class="room-price-total">R$ 54.936</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://www.booking.com/hotel/me/one-amp-only-portonovi.html" target="_blank" class="btn-rooms">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                Ver Quartos no Booking.com
+            </a>
         </div>
     </div>
 
     <!-- HOTEL 3: REGENT PORTO MONTENEGRO -->
-    <div class="hotel-card">
+    <div class="hotel-card" id="regent">
         <img src="images/regent-porto.jpg" alt="Regent Porto Montenegro" class="hotel-img">
         <div class="hotel-body">
             <div class="hotel-name">Regent Porto Montenegro</div>
             <div class="hotel-location">Obala bb, Porto Montenegro, 85320 Tivat, Montenegro</div>
-            <div class="hotel-rating">9.3 Wonderful — Booking.com</div>
+            <div class="hotel-rating">9.3 Wonderful &mdash; Booking.com</div>
             <div class="hotel-info-grid">
                 <div>
                     <div class="hotel-info-label">Check-in</div>
@@ -654,46 +742,66 @@
                 Cafe da manha incluso &middot; 3 piscinas &middot; 4 restaurantes &middot; Spa &middot; Marina de luxo &middot; Boka Bay UNESCO &middot; Cancelamento gratis ate 13/06
             </div>
 
-            <table class="price-table">
-                <thead>
-                    <tr>
-                        <th>Categoria</th>
-                        <th>Tipo</th>
-                        <th>Diaria</th>
-                        <th>Total (2 noites)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="category-label cat-economico">Economico</span><br>Classic Room</td>
-                        <td>258ft&sup2; &middot; Varanda</td>
-                        <td>R$ 2.632</td>
-                        <td class="price-highlight">R$ 5.870</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-intermediario">Intermediario</span><br>Junior Suite Sea View</td>
-                        <td>Vista Mar &middot; Varanda</td>
-                        <td>R$ 4.893</td>
-                        <td class="price-highlight">R$ 9.786</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-top">Top</span><br>Regent Suite</td>
-                        <td>Sea View &middot; Suite Premium</td>
-                        <td>R$ 6.036</td>
-                        <td class="price-highlight">R$ 12.072</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Room Cards -->
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/regent-deluxe.jpg" alt="Classic Room" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-economico">Economico</span>
+                            <div class="room-name">Classic Room</div>
+                            <div class="room-details">258ft&sup2; &middot; Varanda &middot; Cama King &middot; Vista Marina</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 2.632/noite</span>
+                                <span class="room-price-total">R$ 5.870</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/regent-premium.jpg" alt="Junior Suite Sea View" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-intermediario">Intermediario</span>
+                            <div class="room-name">Junior Suite Sea View</div>
+                            <div class="room-details">Vista Mar &middot; Varanda &middot; Sala de Estar &middot; Cama King</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 4.893/noite</span>
+                                <span class="room-price-total">R$ 9.786</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/regent-suite.jpg" alt="Regent Suite" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-top">Top</span>
+                            <div class="room-name">Regent Suite</div>
+                            <div class="room-details">Vista Mar Panoramica &middot; Suite Premium &middot; Sala de Estar &middot; Varanda Ampla</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 6.036/noite</span>
+                                <span class="room-price-total">R$ 12.072</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://www.booking.com/hotel/me/regent-porto-montenegro.html" target="_blank" class="btn-rooms">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                Ver Quartos no Booking.com
+            </a>
         </div>
     </div>
 
     <!-- HOTEL 4: BELLEVUE DUBROVNIK -->
-    <div class="hotel-card">
+    <div class="hotel-card" id="bellevue">
         <img src="images/bellevue-dubrovnik.jpg" alt="Hotel Bellevue Dubrovnik" class="hotel-img">
         <div class="hotel-body">
             <div class="hotel-name">Hotel Bellevue Dubrovnik</div>
             <div class="hotel-location">Pera Cingrije 7, Lapad, 20000 Dubrovnik, Croacia</div>
-            <div class="hotel-rating">9.4 Wonderful — Booking.com</div>
+            <div class="hotel-rating">9.4 Wonderful &mdash; Booking.com</div>
             <div class="hotel-info-grid">
                 <div>
                     <div class="hotel-info-label">Check-in</div>
@@ -716,36 +824,56 @@
                 Cafe da manha incluso &middot; Spa diario incluso &middot; Beachfront &middot; Piscina interna com vista mar &middot; 1,1 km do Old Town &middot; Estacionamento gratis &middot; Cancelamento gratis ate 26/06
             </div>
 
-            <table class="price-table">
-                <thead>
-                    <tr>
-                        <th>Categoria</th>
-                        <th>Tipo</th>
-                        <th>Diaria</th>
-                        <th>Total (2 noites)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="category-label cat-economico">Economico</span><br>Classic Double Sea View</td>
-                        <td>280ft&sup2; &middot; Vista Mar</td>
-                        <td>R$ 4.350</td>
-                        <td class="price-highlight">R$ 8.700</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-intermediario">Intermediario</span><br>Executive Suite Sea View</td>
-                        <td>452ft&sup2; &middot; Vista Mar &middot; Suite</td>
-                        <td>R$ 7.450</td>
-                        <td class="price-highlight">R$ 14.900</td>
-                    </tr>
-                    <tr>
-                        <td><span class="category-label cat-top">Top</span><br>Presidential Suite Sea View</td>
-                        <td>614ft&sup2; &middot; Vista Mar &middot; 2 Banheiros</td>
-                        <td>R$ 13.531</td>
-                        <td class="price-highlight">R$ 27.062</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Room Cards -->
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/bellevue-deluxe.jpg" alt="Classic Double Sea View" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-economico">Economico</span>
+                            <div class="room-name">Classic Double Sea View</div>
+                            <div class="room-details">280ft&sup2; &middot; Vista Mar &middot; Varanda &middot; Cama King</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 4.350/noite</span>
+                                <span class="room-price-total">R$ 8.700</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/bellevue-superior.jpg" alt="Executive Suite Sea View" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-intermediario">Intermediario</span>
+                            <div class="room-name">Executive Suite Sea View</div>
+                            <div class="room-details">452ft&sup2; &middot; Vista Mar &middot; Suite &middot; Sala de Estar &middot; Cama King</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 7.450/noite</span>
+                                <span class="room-price-total">R$ 14.900</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-card-inner">
+                        <img src="images/bellevue-penthouse.jpg" alt="Presidential Suite Sea View" class="room-img">
+                        <div class="room-info">
+                            <span class="room-category cat-top">Top</span>
+                            <div class="room-name">Presidential Suite Sea View</div>
+                            <div class="room-details">614ft&sup2; &middot; Vista Mar Panoramica &middot; 2 Banheiros &middot; Sala de Estar &middot; Varanda Ampla</div>
+                            <div class="room-prices">
+                                <span class="room-price-daily">R$ 13.531/noite</span>
+                                <span class="room-price-total">R$ 27.062</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://www.booking.com/hotel/hr/bellevue-dubrovnik.html" target="_blank" class="btn-rooms">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                Ver Quartos no Booking.com
+            </a>
         </div>
     </div>
 </section>
@@ -762,44 +890,44 @@
 
     <!-- OPÇÃO ECONÔMICA -->
     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #81c784; margin-bottom: 1rem; margin-top: 2rem;">
-        <span class="category-label cat-economico">Economico</span>
+        <span class="room-category cat-economico">Economico</span>
     </h3>
     <table class="investment-table">
         <thead>
             <tr>
                 <th>Hotel</th>
-                <th>Destino</th>
+                <th>Quarto</th>
                 <th>Noites</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Adriana Hvar Spa Hotel</td>
-                <td>Hvar</td>
+                <td>Adriana Hvar</td>
+                <td>Spa Suite</td>
                 <td>4</td>
                 <td>R$ 19.426</td>
             </tr>
             <tr>
-                <td>One&Only Portonovi</td>
-                <td>Herceg Novi</td>
+                <td>One&amp;Only Portonovi</td>
+                <td>Portonovi Room</td>
                 <td>2</td>
                 <td>R$ 20.847</td>
             </tr>
             <tr>
                 <td>Regent Porto Montenegro</td>
-                <td>Tivat</td>
+                <td>Classic Room</td>
                 <td>2</td>
                 <td>R$ 5.870</td>
             </tr>
             <tr>
                 <td>Hotel Bellevue Dubrovnik</td>
-                <td>Dubrovnik</td>
+                <td>Classic Double Sea View</td>
                 <td>2</td>
                 <td>R$ 8.700</td>
             </tr>
             <tr class="total">
-                <td colspan="3">Total Hospedagem — Economico</td>
+                <td colspan="3">Total Hospedagem &mdash; Economico</td>
                 <td>R$ 54.843</td>
             </tr>
         </tbody>
@@ -807,44 +935,44 @@
 
     <!-- OPÇÃO INTERMEDIÁRIA -->
     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #64b5f6; margin-bottom: 1rem; margin-top: 2.5rem;">
-        <span class="category-label cat-intermediario">Intermediario</span>
+        <span class="room-category cat-intermediario">Intermediario</span>
     </h3>
     <table class="investment-table">
         <thead>
             <tr>
                 <th>Hotel</th>
-                <th>Destino</th>
+                <th>Quarto</th>
                 <th>Noites</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Adriana Hvar Spa Hotel</td>
-                <td>Hvar</td>
+                <td>Adriana Hvar</td>
+                <td>Spa Suite Sea View</td>
                 <td>4</td>
                 <td>R$ 21.252</td>
             </tr>
             <tr>
-                <td>One&Only Portonovi</td>
-                <td>Herceg Novi</td>
+                <td>One&amp;Only Portonovi</td>
+                <td>Bay Room</td>
                 <td>2</td>
                 <td>R$ 24.464</td>
             </tr>
             <tr>
                 <td>Regent Porto Montenegro</td>
-                <td>Tivat</td>
+                <td>Junior Suite Sea View</td>
                 <td>2</td>
                 <td>R$ 9.786</td>
             </tr>
             <tr>
                 <td>Hotel Bellevue Dubrovnik</td>
-                <td>Dubrovnik</td>
+                <td>Executive Suite Sea View</td>
                 <td>2</td>
                 <td>R$ 14.900</td>
             </tr>
             <tr class="total">
-                <td colspan="3">Total Hospedagem — Intermediario</td>
+                <td colspan="3">Total Hospedagem &mdash; Intermediario</td>
                 <td>R$ 70.402</td>
             </tr>
         </tbody>
@@ -852,44 +980,44 @@
 
     <!-- OPÇÃO TOP -->
     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #d4af37; margin-bottom: 1rem; margin-top: 2.5rem;">
-        <span class="category-label cat-top">Top</span>
+        <span class="room-category cat-top">Top</span>
     </h3>
     <table class="investment-table">
         <thead>
             <tr>
                 <th>Hotel</th>
-                <th>Destino</th>
+                <th>Quarto</th>
                 <th>Noites</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Adriana Hvar Spa Hotel</td>
-                <td>Hvar</td>
+                <td>Adriana Hvar</td>
+                <td>Penthouse Suite</td>
                 <td>4</td>
                 <td>R$ 25.169</td>
             </tr>
             <tr>
-                <td>One&Only Portonovi</td>
-                <td>Herceg Novi</td>
+                <td>One&amp;Only Portonovi</td>
+                <td>One&amp;Only Suite</td>
                 <td>2</td>
                 <td>R$ 54.936</td>
             </tr>
             <tr>
                 <td>Regent Porto Montenegro</td>
-                <td>Tivat</td>
+                <td>Regent Suite</td>
                 <td>2</td>
                 <td>R$ 12.072</td>
             </tr>
             <tr>
                 <td>Hotel Bellevue Dubrovnik</td>
-                <td>Dubrovnik</td>
+                <td>Presidential Suite Sea View</td>
                 <td>2</td>
                 <td>R$ 27.062</td>
             </tr>
             <tr class="total">
-                <td colspan="3">Total Hospedagem — Top</td>
+                <td colspan="3">Total Hospedagem &mdash; Top</td>
                 <td>R$ 119.239</td>
             </tr>
         </tbody>
@@ -898,11 +1026,11 @@
     <div class="disclaimer">
         <strong>Observacoes importantes:</strong><br><br>
         1. Proposta valida por 24 horas.<br>
-        2. Apenas cotado — somente a emissao/reserva efetiva garante a disponibilidade.<br>
+        2. Apenas cotado &mdash; somente a emissao/reserva efetiva garante a disponibilidade.<br>
         3. Valores pesquisados em 09/03/2026 via Booking.com, sujeitos a alteracao.<br>
-        4. Taxas locais (city tax) nao incluidas — pagas diretamente no hotel.<br>
+        4. Taxas locais (city tax) nao incluidas &mdash; pagas diretamente no hotel.<br>
         5. Passagens aereas nao incluidas neste orcamento.<br>
-        6. Transfers entre cidades nao incluidos — serao cotados separadamente.
+        6. Transfers entre cidades nao incluidos &mdash; serao cotados separadamente.
     </div>
 </section>
 
@@ -928,19 +1056,31 @@
     <div class="nav-panel-title">Navegacao</div>
     <div class="nav-panel-grid">
         <a href="#roteiro" class="nav-panel-item" onclick="closeNav()">
-            <span class="nav-panel-icon">📅</span>
+            <span class="nav-panel-icon">&#x1F4C5;</span>
             <span class="nav-panel-label">Roteiro</span>
         </a>
-        <a href="#hoteis" class="nav-panel-item" onclick="closeNav()">
-            <span class="nav-panel-icon">🏨</span>
-            <span class="nav-panel-label">Hoteis</span>
+        <a href="#adriana" class="nav-panel-item" onclick="closeNav()">
+            <span class="nav-panel-icon">&#x1F3D6;</span>
+            <span class="nav-panel-label">Hvar</span>
+        </a>
+        <a href="#oneonly" class="nav-panel-item" onclick="closeNav()">
+            <span class="nav-panel-icon">&#x2728;</span>
+            <span class="nav-panel-label">One&amp;Only</span>
+        </a>
+        <a href="#regent" class="nav-panel-item" onclick="closeNav()">
+            <span class="nav-panel-icon">&#x26F5;</span>
+            <span class="nav-panel-label">Regent</span>
+        </a>
+        <a href="#bellevue" class="nav-panel-item" onclick="closeNav()">
+            <span class="nav-panel-icon">&#x1F3F0;</span>
+            <span class="nav-panel-label">Bellevue</span>
         </a>
         <a href="#investimento" class="nav-panel-item" onclick="closeNav()">
-            <span class="nav-panel-icon">💰</span>
+            <span class="nav-panel-icon">&#x1F4B0;</span>
             <span class="nav-panel-label">Investimento</span>
         </a>
         <a href="#hero" class="nav-panel-item" onclick="closeNav()">
-            <span class="nav-panel-icon">⬆️</span>
+            <span class="nav-panel-icon">&#x2B06;</span>
             <span class="nav-panel-label">Topo</span>
         </a>
     </div>
