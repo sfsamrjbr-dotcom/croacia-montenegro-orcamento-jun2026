@@ -190,16 +190,70 @@
         .room-card:hover {
             border-color: rgba(212,175,55,0.3);
         }
-        .room-card-inner {
-            display: flex;
-            flex-direction: row;
-        }
-        .room-img {
-            width: 180px;
-            min-height: 140px;
-            object-fit: cover;
+
+        /* Carousel */
+        .room-carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
             flex-shrink: 0;
         }
+        .room-carousel-track {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+        .room-carousel-track img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            flex-shrink: 0;
+            cursor: zoom-in;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .carousel-btn.prev { left: 8px; }
+        .carousel-btn.next { right: 8px; }
+        .carousel-dots {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .carousel-dot.active {
+            background: #d4af37;
+        }
+
         .room-info {
             padding: 1rem 1.2rem;
             flex: 1;
@@ -248,33 +302,6 @@
             color: #d4af37;
         }
 
-        /* Button */
-        .btn-rooms {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 1.5rem;
-            padding: 10px 20px;
-            background: rgba(212,175,55,0.12);
-            border: 1px solid rgba(212,175,55,0.3);
-            border-radius: 30px;
-            color: #d4af37;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-        }
-        .btn-rooms:hover {
-            background: rgba(212,175,55,0.25);
-            border-color: rgba(212,175,55,0.5);
-            transform: translateY(-1px);
-        }
-        .btn-rooms svg {
-            width: 16px;
-            height: 16px;
-        }
-
         /* Investment Summary */
         .investment-table {
             width: 100%;
@@ -320,7 +347,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: #d4af37;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .itinerary-destination {
             font-family: 'Playfair Display', serif;
@@ -330,144 +357,128 @@
         }
         .itinerary-hotel {
             font-size: 0.85rem;
-            color: rgba(245,240,235,0.5);
+            color: rgba(245,240,235,0.6);
         }
         .itinerary-transport {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(212,175,55,0.1);
-            border: 1px solid rgba(212,175,55,0.2);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #d4af37;
-            margin-top: 8px;
+            font-size: 0.8rem;
+            color: rgba(245,240,235,0.4);
+            margin-top: 4px;
         }
 
         /* Disclaimer */
         .disclaimer {
-            margin-top: 2rem;
+            margin-top: 2.5rem;
             padding: 1.5rem;
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(212,175,55,0.1);
+            border: 1px solid rgba(245,240,235,0.08);
             border-radius: 12px;
             font-size: 0.8rem;
             color: rgba(245,240,235,0.5);
-            line-height: 1.7;
-        }
-        .disclaimer strong {
-            color: #d4af37;
+            line-height: 1.8;
         }
 
         /* Footer */
         .footer {
             text-align: center;
             padding: 3rem 1.5rem;
-            border-top: 1px solid rgba(245,240,235,0.1);
+            border-top: 1px solid rgba(245,240,235,0.05);
         }
         .footer-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #d4af37;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
         .footer-text {
             font-size: 0.85rem;
-            color: rgba(245,240,235,0.5);
+            color: rgba(245,240,235,0.4);
+            line-height: 1.6;
         }
 
         /* FAB Navigation */
-        html { scroll-behavior: smooth; }
         .nav-fab {
             position: fixed;
             bottom: 24px;
             right: 24px;
-            z-index: 300;
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             background: linear-gradient(135deg, #d4af37, #b8962e);
             border: none;
+            color: #0a0a0a;
             cursor: pointer;
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(212,175,55,0.4), 0 2px 8px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+            transition: transform 0.3s ease;
         }
         .nav-fab:hover { transform: scale(1.08); }
-        .nav-fab:active { transform: scale(0.95); }
-        .nav-fab svg { width: 24px; height: 24px; color: #1a1a2e; transition: transform 0.3s ease; }
-        .nav-fab.open svg { transform: rotate(45deg); }
-
+        .nav-fab.open { transform: rotate(45deg); }
+        .nav-fab svg { width: 24px; height: 24px; }
         .nav-overlay {
             position: fixed;
             inset: 0;
-            z-index: 250;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.5);
+            z-index: 90;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         .nav-overlay.open { opacity: 1; visibility: visible; }
-
         .nav-panel {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 260;
-            background: rgba(18,18,32,0.98);
-            border-top: 1px solid rgba(212,175,55,0.3);
-            border-radius: 24px 24px 0 0;
-            padding: 20px 20px;
-            padding-bottom: max(24px, env(safe-area-inset-bottom));
+            background: #1a1a2e;
+            border-top: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem;
+            z-index: 95;
             transform: translateY(100%);
-            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            transition: transform 0.35s ease;
         }
         .nav-panel.open { transform: translateY(0); }
-
         .nav-panel-handle {
             width: 40px;
             height: 4px;
             background: rgba(245,240,235,0.2);
             border-radius: 2px;
-            margin: 0 auto 16px;
+            margin: 0 auto 1rem;
         }
         .nav-panel-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.1rem;
             color: #d4af37;
+            margin-bottom: 1rem;
             text-align: center;
-            margin-bottom: 16px;
         }
         .nav-panel-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 12px;
         }
         .nav-panel-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            text-decoration: none;
-            padding: 14px 8px;
-            border-radius: 14px;
+            padding: 12px 8px;
+            border-radius: 12px;
             background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(212,175,55,0.08);
+            border: 1px solid rgba(245,240,235,0.06);
+            text-decoration: none;
             transition: all 0.2s ease;
-            cursor: pointer;
         }
-        .nav-panel-item:active {
-            background: rgba(212,175,55,0.15);
-            border-color: rgba(212,175,55,0.3);
-            transform: scale(0.96);
+        .nav-panel-item:hover {
+            background: rgba(212,175,55,0.1);
+            border-color: rgba(212,175,55,0.2);
         }
-        .nav-panel-icon { font-size: 1.5rem; line-height: 1; }
+        .nav-panel-icon { font-size: 1.3rem; }
         .nav-panel-label {
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 0.65rem;
             color: rgba(245,240,235,0.7);
             letter-spacing: 0.3px;
             text-transform: uppercase;
@@ -535,20 +546,31 @@
             text-align: center;
             max-width: 80vw;
         }
-
-        .room-img {
-            cursor: zoom-in;
-            transition: transform 0.3s ease, filter 0.3s ease;
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
-        .room-img:hover {
-            filter: brightness(1.1);
-        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+        .lightbox-nav.prev { left: 20px; }
+        .lightbox-nav.next { right: 20px; }
 
         @media (max-width: 600px) {
             .hotel-info-grid { grid-template-columns: 1fr 1fr; }
-            .room-card-inner { flex-direction: column; }
-            .room-img { width: 100%; height: 180px; }
             .room-prices { flex-direction: column; gap: 2px; }
+            .room-carousel-track img { height: 200px; }
         }
         @media (min-width: 768px) {
             .nav-panel-grid { grid-template-columns: repeat(5, 1fr); }
@@ -626,74 +648,80 @@
             <div class="hotel-location">Obala Fabrika 28, 21450 Hvar, Croacia</div>
             <div class="hotel-rating">9.4 Wonderful &mdash; Booking.com</div>
             <div class="hotel-info-grid">
-                <div>
-                    <div class="hotel-info-label">Check-in</div>
-                    <div class="hotel-info-value">21/06/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Check-out</div>
-                    <div class="hotel-info-value">25/06/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Noites</div>
-                    <div class="hotel-info-value">4 noites</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Destino</div>
-                    <div class="hotel-info-value">Hvar</div>
-                </div>
+                <div><div class="hotel-info-label">Check-in</div><div class="hotel-info-value">21/06/2026</div></div>
+                <div><div class="hotel-info-label">Check-out</div><div class="hotel-info-value">25/06/2026</div></div>
+                <div><div class="hotel-info-label">Noites</div><div class="hotel-info-value">4 noites</div></div>
+                <div><div class="hotel-info-label">Destino</div><div class="hotel-info-value">Hvar</div></div>
             </div>
             <div class="hotel-features">
                 Cafe da manha incluso &middot; Spa diario incluso &middot; Cancelamento gratis ate 14/06 &middot; Rooftop bar com vista para o porto &middot; Praia privativa
             </div>
 
-            <!-- Room Cards -->
             <div class="rooms-grid">
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/adriana-spa-suite.jpg" alt="Spa Suite" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-economico">Economico</span>
-                            <div class="room-name">Spa Suite</div>
-                            <div class="room-details">452ft&sup2; &middot; Vista Cidade &middot; Acesso Spa &middot; Cama King</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 4.856/noite</span>
-                                <span class="room-price-total">R$ 19.426</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/adriana-spa-suite.jpg","images/adriana-spa-suite-2.jpg","images/adriana-spa-suite-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/adriana-spa-suite.jpg" alt="Spa Suite 1">
+                            <img src="images/adriana-spa-suite-2.jpg" alt="Spa Suite 2">
+                            <img src="images/adriana-spa-suite-3.jpg" alt="Spa Suite 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-economico">Economico</span>
+                        <div class="room-name">Spa Suite</div>
+                        <div class="room-details">452ft&sup2; &middot; Vista Cidade &middot; Acesso Spa &middot; Cama King</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 4.856/noite</span>
+                            <span class="room-price-total">R$ 19.426</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/adriana-suite-seaview.jpg" alt="Spa Suite Sea View" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-intermediario">Intermediario</span>
-                            <div class="room-name">Spa Suite Sea View</div>
-                            <div class="room-details">452ft&sup2; &middot; Vista Mar &middot; Acesso Spa &middot; Cama King</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 5.313/noite</span>
-                                <span class="room-price-total">R$ 21.252</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/adriana-suite-seaview.jpg","images/adriana-suite-seaview-2.jpg","images/adriana-suite-seaview-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/adriana-suite-seaview.jpg" alt="Spa Suite Sea View 1">
+                            <img src="images/adriana-suite-seaview-2.jpg" alt="Spa Suite Sea View 2">
+                            <img src="images/adriana-suite-seaview-3.jpg" alt="Spa Suite Sea View 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-intermediario">Intermediario</span>
+                        <div class="room-name">Spa Suite Sea View</div>
+                        <div class="room-details">452ft&sup2; &middot; Vista Mar &middot; Acesso Spa &middot; Cama King</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 5.313/noite</span>
+                            <span class="room-price-total">R$ 21.252</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/adriana-penthouse.jpg" alt="Penthouse Suite" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-top">Top</span>
-                            <div class="room-name">Penthouse Suite</div>
-                            <div class="room-details">Varanda Privativa &middot; Vista Mar Panoramica &middot; Acesso Spa &middot; Andar mais alto</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 6.292/noite</span>
-                                <span class="room-price-total">R$ 25.169</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/adriana-penthouse.jpg","images/adriana-penthouse-2.jpg","images/adriana-penthouse-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/adriana-penthouse.jpg" alt="Penthouse Suite 1">
+                            <img src="images/adriana-penthouse-2.jpg" alt="Penthouse Suite 2">
+                            <img src="images/adriana-penthouse-3.jpg" alt="Penthouse Suite 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-top">Top</span>
+                        <div class="room-name">Penthouse Suite</div>
+                        <div class="room-details">Varanda Privativa &middot; Vista Mar Panoramica &middot; Acesso Spa &middot; Andar mais alto</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 6.292/noite</span>
+                            <span class="room-price-total">R$ 25.169</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -705,74 +733,80 @@
             <div class="hotel-location">Portonovi Resort, 85340 Herceg-Novi, Montenegro</div>
             <div class="hotel-rating">9.6 Exceptional &mdash; Booking.com</div>
             <div class="hotel-info-grid">
-                <div>
-                    <div class="hotel-info-label">Check-in</div>
-                    <div class="hotel-info-value">25/06/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Check-out</div>
-                    <div class="hotel-info-value">27/06/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Noites</div>
-                    <div class="hotel-info-value">2 noites</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Destino</div>
-                    <div class="hotel-info-value">Herceg Novi</div>
-                </div>
+                <div><div class="hotel-info-label">Check-in</div><div class="hotel-info-value">25/06/2026</div></div>
+                <div><div class="hotel-info-label">Check-out</div><div class="hotel-info-value">27/06/2026</div></div>
+                <div><div class="hotel-info-label">Noites</div><div class="hotel-info-value">2 noites</div></div>
+                <div><div class="hotel-info-label">Destino</div><div class="hotel-info-value">Herceg Novi</div></div>
             </div>
             <div class="hotel-features">
                 Cafe da manha incluso &middot; Praia privativa &middot; Spa Chenot &middot; 3 restaurantes &middot; Piscina infinity &middot; Boka Bay UNESCO &middot; Cancelamento gratis ate 26/05
             </div>
 
-            <!-- Room Cards -->
             <div class="rooms-grid">
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/oneonly-suite-one.jpg" alt="Portonovi Room" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-economico">Economico</span>
-                            <div class="room-name">Portonovi Room</div>
-                            <div class="room-details">592ft&sup2; &middot; Vista Montanha &middot; Varanda &middot; Cama King</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 10.424/noite</span>
-                                <span class="room-price-total">R$ 20.847</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/oneonly-grand-suite.jpg","images/oneonly-grand-suite-2.jpg","images/oneonly-grand-suite-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/oneonly-grand-suite.jpg" alt="Portonovi Room 1">
+                            <img src="images/oneonly-grand-suite-2.jpg" alt="Portonovi Room 2">
+                            <img src="images/oneonly-grand-suite-3.jpg" alt="Portonovi Room 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-economico">Economico</span>
+                        <div class="room-name">Portonovi Room</div>
+                        <div class="room-details">592ft&sup2; &middot; Vista Montanha &middot; Varanda &middot; Cama King</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 10.424/noite</span>
+                            <span class="room-price-total">R$ 20.847</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/oneonly-grand-suite.jpg" alt="Bay Room" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-intermediario">Intermediario</span>
-                            <div class="room-name">Bay Room</div>
-                            <div class="room-details">592ft&sup2; &middot; Vista Mar (Boka Bay) &middot; Varanda &middot; Cama King</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 12.232/noite</span>
-                                <span class="room-price-total">R$ 24.464</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/oneonly-suite-one.jpg","images/oneonly-suite-one-2.jpg","images/oneonly-suite-one-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/oneonly-suite-one.jpg" alt="Bay Room 1">
+                            <img src="images/oneonly-suite-one-2.jpg" alt="Bay Room 2">
+                            <img src="images/oneonly-suite-one-3.jpg" alt="Bay Room 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-intermediario">Intermediario</span>
+                        <div class="room-name">Bay Room</div>
+                        <div class="room-details">592ft&sup2; &middot; Vista Mar (Boka Bay) &middot; Varanda &middot; Cama King</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 12.232/noite</span>
+                            <span class="room-price-total">R$ 24.464</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/oneonly-villa.jpg" alt="One&amp;Only Suite" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-top">Top</span>
-                            <div class="room-name">One&amp;Only Suite</div>
-                            <div class="room-details">1324ft&sup2; &middot; Terraco Privativo &middot; 2 Lareiras &middot; Sala de Estar &middot; Vista Boka Bay</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 27.468/noite</span>
-                                <span class="room-price-total">R$ 54.936</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/oneonly-villa.jpg","images/oneonly-villa-2.jpg","images/oneonly-villa-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/oneonly-villa.jpg" alt="One&amp;Only Suite 1">
+                            <img src="images/oneonly-villa-2.jpg" alt="One&amp;Only Suite 2">
+                            <img src="images/oneonly-villa-3.jpg" alt="One&amp;Only Suite 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-top">Top</span>
+                        <div class="room-name">One&amp;Only Suite</div>
+                        <div class="room-details">1324ft&sup2; &middot; Terraco Privativo &middot; 2 Lareiras &middot; Sala de Estar &middot; Vista Boka Bay</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 27.468/noite</span>
+                            <span class="room-price-total">R$ 54.936</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -784,74 +818,80 @@
             <div class="hotel-location">Obala bb, Porto Montenegro, 85320 Tivat, Montenegro</div>
             <div class="hotel-rating">9.3 Wonderful &mdash; Booking.com</div>
             <div class="hotel-info-grid">
-                <div>
-                    <div class="hotel-info-label">Check-in</div>
-                    <div class="hotel-info-value">27/06/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Check-out</div>
-                    <div class="hotel-info-value">29/06/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Noites</div>
-                    <div class="hotel-info-value">2 noites</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Destino</div>
-                    <div class="hotel-info-value">Tivat</div>
-                </div>
+                <div><div class="hotel-info-label">Check-in</div><div class="hotel-info-value">27/06/2026</div></div>
+                <div><div class="hotel-info-label">Check-out</div><div class="hotel-info-value">29/06/2026</div></div>
+                <div><div class="hotel-info-label">Noites</div><div class="hotel-info-value">2 noites</div></div>
+                <div><div class="hotel-info-label">Destino</div><div class="hotel-info-value">Tivat</div></div>
             </div>
             <div class="hotel-features">
                 Cafe da manha incluso &middot; 3 piscinas &middot; 4 restaurantes &middot; Spa &middot; Marina de luxo &middot; Boka Bay UNESCO &middot; Cancelamento gratis ate 13/06
             </div>
 
-            <!-- Room Cards -->
             <div class="rooms-grid">
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/regent-deluxe.jpg" alt="Classic Room" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-economico">Economico</span>
-                            <div class="room-name">Classic Room</div>
-                            <div class="room-details">258ft&sup2; &middot; Varanda &middot; Cama King &middot; Vista Marina</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 2.632/noite</span>
-                                <span class="room-price-total">R$ 5.870</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/regent-deluxe.jpg","images/regent-deluxe-2.jpg","images/regent-deluxe-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/regent-deluxe.jpg" alt="Classic Room 1">
+                            <img src="images/regent-deluxe-2.jpg" alt="Classic Room 2">
+                            <img src="images/regent-deluxe-3.jpg" alt="Classic Room 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-economico">Economico</span>
+                        <div class="room-name">Classic Room</div>
+                        <div class="room-details">258ft&sup2; &middot; Varanda &middot; Cama King &middot; Vista Marina</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 2.632/noite</span>
+                            <span class="room-price-total">R$ 5.870</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/regent-premium.jpg" alt="Junior Suite Sea View" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-intermediario">Intermediario</span>
-                            <div class="room-name">Junior Suite Sea View</div>
-                            <div class="room-details">Vista Mar &middot; Varanda &middot; Sala de Estar &middot; Cama King</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 4.893/noite</span>
-                                <span class="room-price-total">R$ 9.786</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/regent-premium.jpg","images/regent-premium-2.jpg","images/regent-premium-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/regent-premium.jpg" alt="Junior Suite Sea View 1">
+                            <img src="images/regent-premium-2.jpg" alt="Junior Suite Sea View 2">
+                            <img src="images/regent-premium-3.jpg" alt="Junior Suite Sea View 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-intermediario">Intermediario</span>
+                        <div class="room-name">Junior Suite Sea View</div>
+                        <div class="room-details">Vista Mar &middot; Varanda &middot; Sala de Estar &middot; Cama King</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 4.893/noite</span>
+                            <span class="room-price-total">R$ 9.786</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/regent-suite.jpg" alt="Regent Suite" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-top">Top</span>
-                            <div class="room-name">Regent Suite</div>
-                            <div class="room-details">Vista Mar Panoramica &middot; Suite Premium &middot; Sala de Estar &middot; Varanda Ampla</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 6.036/noite</span>
-                                <span class="room-price-total">R$ 12.072</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/regent-suite.jpg","images/regent-suite-2.jpg","images/regent-suite-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/regent-suite.jpg" alt="Regent Suite 1">
+                            <img src="images/regent-suite-2.jpg" alt="Regent Suite 2">
+                            <img src="images/regent-suite-3.jpg" alt="Regent Suite 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-top">Top</span>
+                        <div class="room-name">Regent Suite</div>
+                        <div class="room-details">Vista Mar Panoramica &middot; Suite Premium &middot; Sala de Estar &middot; Varanda Ampla</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 6.036/noite</span>
+                            <span class="room-price-total">R$ 12.072</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -863,74 +903,80 @@
             <div class="hotel-location">Pera Cingrije 7, Lapad, 20000 Dubrovnik, Croacia</div>
             <div class="hotel-rating">9.4 Wonderful &mdash; Booking.com</div>
             <div class="hotel-info-grid">
-                <div>
-                    <div class="hotel-info-label">Check-in</div>
-                    <div class="hotel-info-value">29/06/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Check-out</div>
-                    <div class="hotel-info-value">01/07/2026</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Noites</div>
-                    <div class="hotel-info-value">2 noites</div>
-                </div>
-                <div>
-                    <div class="hotel-info-label">Destino</div>
-                    <div class="hotel-info-value">Dubrovnik</div>
-                </div>
+                <div><div class="hotel-info-label">Check-in</div><div class="hotel-info-value">29/06/2026</div></div>
+                <div><div class="hotel-info-label">Check-out</div><div class="hotel-info-value">01/07/2026</div></div>
+                <div><div class="hotel-info-label">Noites</div><div class="hotel-info-value">2 noites</div></div>
+                <div><div class="hotel-info-label">Destino</div><div class="hotel-info-value">Dubrovnik</div></div>
             </div>
             <div class="hotel-features">
                 Cafe da manha incluso &middot; Spa diario incluso &middot; Beachfront &middot; Piscina interna com vista mar &middot; 1,1 km do Old Town &middot; Estacionamento gratis &middot; Cancelamento gratis ate 26/06
             </div>
 
-            <!-- Room Cards -->
             <div class="rooms-grid">
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/bellevue-deluxe.jpg" alt="Classic Double Sea View" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-economico">Economico</span>
-                            <div class="room-name">Classic Double Sea View</div>
-                            <div class="room-details">280ft&sup2; &middot; Vista Mar &middot; Varanda &middot; Cama King</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 4.350/noite</span>
-                                <span class="room-price-total">R$ 8.700</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/bellevue-deluxe.jpg","images/bellevue-deluxe-2.jpg","images/bellevue-deluxe-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/bellevue-deluxe.jpg" alt="Classic Double Sea View 1">
+                            <img src="images/bellevue-deluxe-2.jpg" alt="Classic Double Sea View 2">
+                            <img src="images/bellevue-deluxe-3.jpg" alt="Classic Double Sea View 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-economico">Economico</span>
+                        <div class="room-name">Classic Double Sea View</div>
+                        <div class="room-details">280ft&sup2; &middot; Vista Mar &middot; Varanda &middot; Cama King</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 4.350/noite</span>
+                            <span class="room-price-total">R$ 8.700</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/bellevue-superior.jpg" alt="Executive Suite Sea View" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-intermediario">Intermediario</span>
-                            <div class="room-name">Executive Suite Sea View</div>
-                            <div class="room-details">452ft&sup2; &middot; Vista Mar &middot; Suite &middot; Sala de Estar &middot; Cama King</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 7.450/noite</span>
-                                <span class="room-price-total">R$ 14.900</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/bellevue-superior.jpg","images/bellevue-superior-2.jpg","images/bellevue-superior-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/bellevue-superior.jpg" alt="Executive Suite Sea View 1">
+                            <img src="images/bellevue-superior-2.jpg" alt="Executive Suite Sea View 2">
+                            <img src="images/bellevue-superior-3.jpg" alt="Executive Suite Sea View 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-intermediario">Intermediario</span>
+                        <div class="room-name">Executive Suite Sea View</div>
+                        <div class="room-details">452ft&sup2; &middot; Vista Mar &middot; Suite &middot; Sala de Estar &middot; Cama King</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 7.450/noite</span>
+                            <span class="room-price-total">R$ 14.900</span>
                         </div>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-card-inner">
-                        <img src="images/bellevue-penthouse.jpg" alt="Presidential Suite Sea View" class="room-img">
-                        <div class="room-info">
-                            <span class="room-category cat-top">Top</span>
-                            <div class="room-name">Presidential Suite Sea View</div>
-                            <div class="room-details">614ft&sup2; &middot; Vista Mar Panoramica &middot; 2 Banheiros &middot; Sala de Estar &middot; Varanda Ampla</div>
-                            <div class="room-prices">
-                                <span class="room-price-daily">R$ 13.531/noite</span>
-                                <span class="room-price-total">R$ 27.062</span>
-                            </div>
+                    <div class="room-carousel" data-images='["images/bellevue-penthouse.jpg","images/bellevue-penthouse-2.jpg","images/bellevue-penthouse-3.jpg"]'>
+                        <div class="room-carousel-track">
+                            <img src="images/bellevue-penthouse.jpg" alt="Presidential Suite Sea View 1">
+                            <img src="images/bellevue-penthouse-2.jpg" alt="Presidential Suite Sea View 2">
+                            <img src="images/bellevue-penthouse-3.jpg" alt="Presidential Suite Sea View 3">
+                        </div>
+                        <button class="carousel-btn prev" onclick="carouselPrev(this)">&lsaquo;</button>
+                        <button class="carousel-btn next" onclick="carouselNext(this)">&rsaquo;</button>
+                        <div class="carousel-dots"></div>
+                    </div>
+                    <div class="room-info">
+                        <span class="room-category cat-top">Top</span>
+                        <div class="room-name">Presidential Suite Sea View</div>
+                        <div class="room-details">614ft&sup2; &middot; Vista Mar Panoramica &middot; 2 Banheiros &middot; Sala de Estar &middot; Varanda Ampla</div>
+                        <div class="room-prices">
+                            <span class="room-price-daily">R$ 13.531/noite</span>
+                            <span class="room-price-total">R$ 27.062</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </section>
@@ -942,141 +988,48 @@
     <div class="gold-line"></div>
 
     <p style="font-size: 0.9rem; color: rgba(245,240,235,0.6); margin-bottom: 1.5rem; line-height: 1.6;">
-        Abaixo o resumo do investimento em hospedagem para 10 noites (21/06 a 01/07), separado por destino e categoria. Valores em Reais (BRL), pesquisados em 09/03/2026 via Booking.com.
+        Abaixo o resumo do investimento em hospedagem para 10 noites (21/06 a 01/07), separado por destino e categoria. Valores em Reais (BRL), pesquisados em 09/03/2026.
     </p>
 
-    <!-- OPÇÃO ECONÔMICA -->
     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #81c784; margin-bottom: 1rem; margin-top: 2rem;">
         <span class="room-category cat-economico">Economico</span>
     </h3>
     <table class="investment-table">
-        <thead>
-            <tr>
-                <th>Hotel</th>
-                <th>Quarto</th>
-                <th>Noites</th>
-                <th>Total</th>
-            </tr>
-        </thead>
+        <thead><tr><th>Hotel</th><th>Quarto</th><th>Noites</th><th>Total</th></tr></thead>
         <tbody>
-            <tr>
-                <td>Adriana Hvar</td>
-                <td>Spa Suite</td>
-                <td>4</td>
-                <td>R$ 19.426</td>
-            </tr>
-            <tr>
-                <td>One&amp;Only Portonovi</td>
-                <td>Portonovi Room</td>
-                <td>2</td>
-                <td>R$ 20.847</td>
-            </tr>
-            <tr>
-                <td>Regent Porto Montenegro</td>
-                <td>Classic Room</td>
-                <td>2</td>
-                <td>R$ 5.870</td>
-            </tr>
-            <tr>
-                <td>Hotel Bellevue Dubrovnik</td>
-                <td>Classic Double Sea View</td>
-                <td>2</td>
-                <td>R$ 8.700</td>
-            </tr>
-            <tr class="total">
-                <td colspan="3">Total Hospedagem &mdash; Economico</td>
-                <td>R$ 54.843</td>
-            </tr>
+            <tr><td>Adriana Hvar</td><td>Spa Suite</td><td>4</td><td>R$ 19.426</td></tr>
+            <tr><td>One&amp;Only Portonovi</td><td>Portonovi Room</td><td>2</td><td>R$ 20.847</td></tr>
+            <tr><td>Regent Porto Montenegro</td><td>Classic Room</td><td>2</td><td>R$ 5.870</td></tr>
+            <tr><td>Hotel Bellevue Dubrovnik</td><td>Classic Double Sea View</td><td>2</td><td>R$ 8.700</td></tr>
+            <tr class="total"><td colspan="3">Total Hospedagem &mdash; Economico</td><td>R$ 54.843</td></tr>
         </tbody>
     </table>
 
-    <!-- OPÇÃO INTERMEDIÁRIA -->
     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #64b5f6; margin-bottom: 1rem; margin-top: 2.5rem;">
         <span class="room-category cat-intermediario">Intermediario</span>
     </h3>
     <table class="investment-table">
-        <thead>
-            <tr>
-                <th>Hotel</th>
-                <th>Quarto</th>
-                <th>Noites</th>
-                <th>Total</th>
-            </tr>
-        </thead>
+        <thead><tr><th>Hotel</th><th>Quarto</th><th>Noites</th><th>Total</th></tr></thead>
         <tbody>
-            <tr>
-                <td>Adriana Hvar</td>
-                <td>Spa Suite Sea View</td>
-                <td>4</td>
-                <td>R$ 21.252</td>
-            </tr>
-            <tr>
-                <td>One&amp;Only Portonovi</td>
-                <td>Bay Room</td>
-                <td>2</td>
-                <td>R$ 24.464</td>
-            </tr>
-            <tr>
-                <td>Regent Porto Montenegro</td>
-                <td>Junior Suite Sea View</td>
-                <td>2</td>
-                <td>R$ 9.786</td>
-            </tr>
-            <tr>
-                <td>Hotel Bellevue Dubrovnik</td>
-                <td>Executive Suite Sea View</td>
-                <td>2</td>
-                <td>R$ 14.900</td>
-            </tr>
-            <tr class="total">
-                <td colspan="3">Total Hospedagem &mdash; Intermediario</td>
-                <td>R$ 70.402</td>
-            </tr>
+            <tr><td>Adriana Hvar</td><td>Spa Suite Sea View</td><td>4</td><td>R$ 21.252</td></tr>
+            <tr><td>One&amp;Only Portonovi</td><td>Bay Room</td><td>2</td><td>R$ 24.464</td></tr>
+            <tr><td>Regent Porto Montenegro</td><td>Junior Suite Sea View</td><td>2</td><td>R$ 9.786</td></tr>
+            <tr><td>Hotel Bellevue Dubrovnik</td><td>Executive Suite Sea View</td><td>2</td><td>R$ 14.900</td></tr>
+            <tr class="total"><td colspan="3">Total Hospedagem &mdash; Intermediario</td><td>R$ 70.402</td></tr>
         </tbody>
     </table>
 
-    <!-- OPÇÃO TOP -->
     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #d4af37; margin-bottom: 1rem; margin-top: 2.5rem;">
         <span class="room-category cat-top">Top</span>
     </h3>
     <table class="investment-table">
-        <thead>
-            <tr>
-                <th>Hotel</th>
-                <th>Quarto</th>
-                <th>Noites</th>
-                <th>Total</th>
-            </tr>
-        </thead>
+        <thead><tr><th>Hotel</th><th>Quarto</th><th>Noites</th><th>Total</th></tr></thead>
         <tbody>
-            <tr>
-                <td>Adriana Hvar</td>
-                <td>Penthouse Suite</td>
-                <td>4</td>
-                <td>R$ 25.169</td>
-            </tr>
-            <tr>
-                <td>One&amp;Only Portonovi</td>
-                <td>One&amp;Only Suite</td>
-                <td>2</td>
-                <td>R$ 54.936</td>
-            </tr>
-            <tr>
-                <td>Regent Porto Montenegro</td>
-                <td>Regent Suite</td>
-                <td>2</td>
-                <td>R$ 12.072</td>
-            </tr>
-            <tr>
-                <td>Hotel Bellevue Dubrovnik</td>
-                <td>Presidential Suite Sea View</td>
-                <td>2</td>
-                <td>R$ 27.062</td>
-            </tr>
-            <tr class="total">
-                <td colspan="3">Total Hospedagem &mdash; Top</td>
-                <td>R$ 119.239</td>
-            </tr>
+            <tr><td>Adriana Hvar</td><td>Penthouse Suite</td><td>4</td><td>R$ 25.169</td></tr>
+            <tr><td>One&amp;Only Portonovi</td><td>One&amp;Only Suite</td><td>2</td><td>R$ 54.936</td></tr>
+            <tr><td>Regent Porto Montenegro</td><td>Regent Suite</td><td>2</td><td>R$ 12.072</td></tr>
+            <tr><td>Hotel Bellevue Dubrovnik</td><td>Presidential Suite Sea View</td><td>2</td><td>R$ 27.062</td></tr>
+            <tr class="total"><td colspan="3">Total Hospedagem &mdash; Top</td><td>R$ 119.239</td></tr>
         </tbody>
     </table>
 
@@ -1084,7 +1037,7 @@
         <strong>Observacoes importantes:</strong><br><br>
         1. Proposta valida por 24 horas.<br>
         2. Apenas cotado &mdash; somente a emissao/reserva efetiva garante a disponibilidade.<br>
-        3. Valores pesquisados em 09/03/2026 via Booking.com, sujeitos a alteracao.<br>
+        3. Valores pesquisados em 09/03/2026, sujeitos a alteracao.<br>
         4. Taxas locais (city tax) nao incluidas &mdash; pagas diretamente no hotel.<br>
         5. Passagens aereas nao incluidas neste orcamento.<br>
         6. Transfers entre cidades nao incluidos &mdash; serao cotados separadamente.
@@ -1144,67 +1097,154 @@
 </div>
 
 <script>
+    // NAV
     const fab = document.getElementById('navFab');
     const overlay = document.getElementById('navOverlay');
     const panel = document.getElementById('navPanel');
-
     function toggleNav() {
         const isOpen = panel.classList.contains('open');
-        if (isOpen) { closeNav(); }
-        else {
+        if (isOpen) { closeNav(); } else {
             panel.classList.add('open');
             overlay.classList.add('open');
             fab.classList.add('open');
         }
     }
-
     function closeNav() {
         panel.classList.remove('open');
         overlay.classList.remove('open');
         fab.classList.remove('open');
     }
-
     fab.addEventListener('click', toggleNav);
     overlay.addEventListener('click', closeNav);
 </script>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<div class="lightbox" id="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-nav prev" onclick="lightboxPrev(event)">&lsaquo;</button>
+    <button class="lightbox-nav next" onclick="lightboxNext(event)">&rsaquo;</button>
     <img id="lightboxImg" src="" alt="">
     <div class="lightbox-caption" id="lightboxCaption"></div>
 </div>
 
 <script>
+    // CAROUSEL
+    let carousels = [];
+    document.querySelectorAll('.room-carousel').forEach((carousel, idx) => {
+        const images = JSON.parse(carousel.dataset.images);
+        const track = carousel.querySelector('.room-carousel-track');
+        const dotsContainer = carousel.querySelector('.carousel-dots');
+        carousel.dataset.index = 0;
+        carousel.dataset.total = images.length;
+        carousel.dataset.id = idx;
+        // Create dots
+        images.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(carousel, i);
+            dotsContainer.appendChild(dot);
+        });
+        carousels.push({ carousel, images });
+    });
+
+    function goToSlide(carousel, index) {
+        const total = parseInt(carousel.dataset.total);
+        if (index < 0) index = total - 1;
+        if (index >= total) index = 0;
+        carousel.dataset.index = index;
+        const track = carousel.querySelector('.room-carousel-track');
+        track.style.transform = `translateX(-${index * 100}%)`;
+        const dots = carousel.querySelectorAll('.carousel-dot');
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+
+    function carouselPrev(btn) {
+        const carousel = btn.closest('.room-carousel');
+        const current = parseInt(carousel.dataset.index);
+        goToSlide(carousel, current - 1);
+    }
+
+    function carouselNext(btn) {
+        const carousel = btn.closest('.room-carousel');
+        const current = parseInt(carousel.dataset.index);
+        goToSlide(carousel, current + 1);
+    }
+
+    // Touch swipe support
+    document.querySelectorAll('.room-carousel').forEach(carousel => {
+        let startX = 0;
+        carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+        carousel.addEventListener('touchend', e => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) carouselNext(carousel.querySelector('.carousel-btn.next'));
+                else carouselPrev(carousel.querySelector('.carousel-btn.prev'));
+            }
+        });
+    });
+
+    // LIGHTBOX
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxCaption = document.getElementById('lightboxCaption');
+    let lightboxImages = [];
+    let lightboxIndex = 0;
 
-    document.querySelectorAll('.room-img').forEach(img => {
+    document.querySelectorAll('.room-carousel-track img').forEach(img => {
         img.addEventListener('click', function() {
-            lightboxImg.src = this.src;
-            const card = this.closest('.room-card');
-            const name = card ? card.querySelector('.room-name') : null;
-            const cat = card ? card.querySelector('.room-category') : null;
-            const hotel = this.closest('.hotel-card');
-            const hotelName = hotel ? hotel.querySelector('.hotel-name') : null;
-            let caption = '';
-            if (hotelName) caption += hotelName.textContent + ' — ';
-            if (name) caption += name.textContent;
-            if (cat) caption += ' (' + cat.textContent + ')';
-            lightboxCaption.textContent = caption;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const carousel = this.closest('.room-carousel');
+            lightboxImages = JSON.parse(carousel.dataset.images);
+            const allImgs = carousel.querySelectorAll('.room-carousel-track img');
+            lightboxIndex = Array.from(allImgs).indexOf(this);
+            showLightbox();
         });
     });
+
+    function showLightbox() {
+        lightboxImg.src = lightboxImages[lightboxIndex];
+        const carousel = document.querySelectorAll('.room-carousel')[0]; // fallback
+        // Find caption from the room card
+        document.querySelectorAll('.room-carousel').forEach(c => {
+            const imgs = JSON.parse(c.dataset.images);
+            if (imgs[0] === lightboxImages[0]) {
+                const card = c.closest('.room-card');
+                const hotel = c.closest('.hotel-card');
+                const hotelName = hotel ? hotel.querySelector('.hotel-name').textContent : '';
+                const roomName = card ? card.querySelector('.room-name').textContent : '';
+                const cat = card ? card.querySelector('.room-category').textContent : '';
+                lightboxCaption.textContent = hotelName + ' — ' + roomName + ' (' + cat + ') ' + (lightboxIndex + 1) + '/' + lightboxImages.length;
+            }
+        });
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 
     function closeLightbox() {
         lightbox.classList.remove('active');
         document.body.style.overflow = '';
     }
 
+    function lightboxPrev(e) {
+        e.stopPropagation();
+        lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+        showLightbox();
+    }
+
+    function lightboxNext(e) {
+        e.stopPropagation();
+        lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+        showLightbox();
+    }
+
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+    });
+
     document.addEventListener('keydown', function(e) {
+        if (!lightbox.classList.contains('active')) return;
         if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') { lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length; showLightbox(); }
+        if (e.key === 'ArrowRight') { lightboxIndex = (lightboxIndex + 1) % lightboxImages.length; showLightbox(); }
     });
 </script>
 
