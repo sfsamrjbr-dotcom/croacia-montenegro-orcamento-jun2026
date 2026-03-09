@@ -475,6 +475,75 @@
             line-height: 1.2;
         }
 
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: rgba(0,0,0,0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            cursor: zoom-out;
+        }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox img {
+            max-width: 92vw;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .lightbox.active img {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .lightbox-caption {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            text-align: center;
+            max-width: 80vw;
+        }
+
+        .room-img {
+            cursor: zoom-in;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .room-img:hover {
+            filter: brightness(1.1);
+        }
+
         @media (max-width: 600px) {
             .hotel-info-grid { grid-template-columns: 1fr 1fr; }
             .room-card-inner { flex-direction: column; }
@@ -624,10 +693,7 @@
                 </div>
             </div>
 
-            <a href="https://www.booking.com/hotel/hr/adriana-hvar-spa.html" target="_blank" class="btn-rooms">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-                Ver Quartos no Booking.com
-            </a>
+
         </div>
     </div>
 
@@ -706,10 +772,7 @@
                 </div>
             </div>
 
-            <a href="https://www.booking.com/hotel/me/one-amp-only-portonovi.html" target="_blank" class="btn-rooms">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-                Ver Quartos no Booking.com
-            </a>
+
         </div>
     </div>
 
@@ -788,10 +851,7 @@
                 </div>
             </div>
 
-            <a href="https://www.booking.com/hotel/me/regent-porto-montenegro.html" target="_blank" class="btn-rooms">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-                Ver Quartos no Booking.com
-            </a>
+
         </div>
     </div>
 
@@ -870,10 +930,7 @@
                 </div>
             </div>
 
-            <a href="https://www.booking.com/hotel/hr/bellevue-dubrovnik.html" target="_blank" class="btn-rooms">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-                Ver Quartos no Booking.com
-            </a>
+
         </div>
     </div>
 </section>
@@ -1109,6 +1166,46 @@
 
     fab.addEventListener('click', toggleNav);
     overlay.addEventListener('click', closeNav);
+</script>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+
+    document.querySelectorAll('.room-img').forEach(img => {
+        img.addEventListener('click', function() {
+            lightboxImg.src = this.src;
+            const card = this.closest('.room-card');
+            const name = card ? card.querySelector('.room-name') : null;
+            const cat = card ? card.querySelector('.room-category') : null;
+            const hotel = this.closest('.hotel-card');
+            const hotelName = hotel ? hotel.querySelector('.hotel-name') : null;
+            let caption = '';
+            if (hotelName) caption += hotelName.textContent + ' — ';
+            if (name) caption += name.textContent;
+            if (cat) caption += ' (' + cat.textContent + ')';
+            lightboxCaption.textContent = caption;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+    });
 </script>
 
 </body>
